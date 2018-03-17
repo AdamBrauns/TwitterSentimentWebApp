@@ -10,15 +10,9 @@
 <body>
 
 	<div>
-		<h1>This is box one.</h1>
-	</div>
-	
-	<div>
-		<h1><a href="php/resultsPage.php">Results Page</a></h1>
-	</div>
-	
-	<div>
-		<img alt="Twitter Logo" src="images/TwitterLogo.png">
+		<?php
+			echo "<h1>This is the results page</h1>";
+		?>	
 	</div>
 	
 </body>
