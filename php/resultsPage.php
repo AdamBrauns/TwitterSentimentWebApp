@@ -12,6 +12,12 @@
 	<div>
 		<?php
 			echo "<h1>This is the results page</h1>";
+			if(isset($_POST["TwitterHandle"])){
+				echo "<h1>Twitter Handle ". $_POST["TwitterHandle"]."</h1>";
+			}
+			if(isset($_POST["Keyword"])){
+				echo "<h1>Keyword ". $_POST["Keyword"]."</h1>";
+			}
 		?>	
 	</div>
 	
