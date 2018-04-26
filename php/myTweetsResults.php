@@ -19,30 +19,33 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#" name="top"><img src="../images/TwitterLogo.png"></a>
+      <a class="navbar-brand" href="../index.php"><img src="../images/TwitterLogo.png"></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a href="../index.html">Home</a></li>
-        <li><a href="#">Keyword</a></li>
-        <li class="active"><a href="#">My Tweets</a></li>
+        <li><a href="../index.php">Home</a></li>
+        <li><a href="keywordSearch.php">Keyword</a></li>
+        <li class="active" name="top"><a href="myTweetsSearch.php">My Tweets</a></li>
       </ul>
     </div>
   </div>
 </nav>
-
+<!--
 <div class="jumbotron">
   <div class="container text-center">
 	<h1>Keyword Info</h1>
     <h1>Twitter Account Info</h1>      
   </div>
 </div>
+-->
 
 <?php        
 
 if(isset($_POST["account"])){
 	//echo "<h1>Twitter Handle ". $_POST["account"] ."</h1>";
 	$user = $_POST["account"];
+}else{
+	$user = "UWWhitewater";
 }
 
 require_once('TwitterAPIExchange.php');
@@ -57,7 +60,7 @@ $settings = array(
 $url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
 $requestMethod = "GET";
 
-if (isset($_GET['user']))  {$user = $_GET['user'];}  else {$user  = "UWWhitewater";}
+//if (isset($_GET['user']))  {$user = $_GET['user'];}  else {$user  = "UWWhitewater";}
 //if (isset($_GET['count'])) {$count = $_GET['count'];} else {$count = 48;}
 
 $count = 30;
@@ -66,41 +69,107 @@ $getfield = "?screen_name=$user&count=$count";
 $twitter = new TwitterAPIExchange($settings);
 $string = json_decode($twitter->setGetfield($getfield)
 ->buildOauth($url, $requestMethod)
-->performRequest(),$assoc = TRUE);
-/*
-foreach($string as $items)
-    {
-        echo "Time and Date of Tweet: ".$items['created_at']."<br />";
-        echo "Tweet: ". $items['text']."<br />";
-        echo "Tweeted by: ". $items['user']['name']."<br />";
-        echo "Screen name: ". $items['user']['screen_name']."<br />";
-        echo "Followers: ". $items['user']['followers_count']."<br />";
-        echo "Friends: ". $items['user']['friends_count']."<br />";
-        echo "Listed: ". $items['user']['listed_count']."<br /><hr />"; 
-    }
-*/	
-	
+->performRequest(),$assoc = TRUE);	
+
+$profileError = 1;
+$errorType = "";
 $counter = 0;
+
+if(count($string) > 1){
+	foreach($string as $items)
+	{
+		if(!isset($items['user']['screen_name'])){
+			$profileError = 5;
+			$errorType = "private";
+		}
+	}
+}else{
+	$profileError = 5;
+	$errorType = "nonexistant";
+}
+
+if($profileError == 5){
+	$url = "https://api.twitter.com/1.1/statuses/user_timeline.json";
+	$requestMethod = "GET";
+
+	$getfield = "?screen_name=TheHackersNews&count=$count";
+	$twitter = new TwitterAPIExchange($settings);
+	$string = json_decode($twitter->setGetfield($getfield)
+	->buildOauth($url, $requestMethod)
+	->performRequest(),$assoc = TRUE);	
+}
+/*
+echo $string[0]['user']['profile_image_url_https'];
+echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo $string[0]['user']['name'];
+echo $string[0]['user']['screen_name'];
+echo $string[0]['user']['location'];
+echo $string[0]['user']['description'];
+echo $string[0]['user']['followers_count'];
+echo $string[0]['user']['friends_count'];
+echo $string[0]['user']['verified'];
+*/
+
+echo "<div class='jumbotron'>";
+echo "<div class='container'>";    
+echo "<div class='row'>";
+echo "<div class='col-sm-4' style='background-color:lavender; padding: 16px;'>";
+echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavenderblush; padding: 16px;'>";
+echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavender; padding: 16px;'>";
+echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+
+if($errorType == "private"){
+	echo "<h3>&nbsp;&nbsp;The Twitter user is private. Showing Tweets for: The Hackers News</h3><br>";
+}else if($errorType == "nonexistant"){
+	echo "<h3>&nbsp;&nbsp;The Twitter user does not exist. Showing Tweets for: The Hackers News</h3><br>";
+}
+	
 foreach($string as $items)
-    {
-		$counter = $counter + 1;
-		if($counter % 3 == 1){
-			echo "<div class='container'>";    
-			echo "<div class='row'>";
-		}
-		echo "<div class='col-sm-4'>";
-		echo "<div class='panel panel-primary'>";
-        echo "<div class='panel-heading'>@".$items['user']['screen_name']."</div>";
+{
+	$counter = $counter + 1;
+	if($counter % 3 == 1){
+		echo "<div class='container'>";    
+		echo "<div class='row'>";
+	}
+	echo "<div class='col-sm-4'>";
+	echo "<div class='panel panel-primary'>";
+	if(isset($items['user']['screen_name'])){
+		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
+	}else{
+		echo "<div class='panel-heading'>ERROR</div>";
+	}
+	if(isset($items['created_at'])){
 		echo "<div class='panel-heading' id='tweetDateHeader'>".$items['created_at']."</div>";
-        echo "<div class='panel-body'>".$items['full_text']."</div>";
-        echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
-        echo "</div>";
-        echo "</div>";
-		if($counter % 3 == 0){
-			echo "</div>";
-			echo "</div><br>";
-		}
-    }
+	}else{
+		echo "<div class='panel-heading' id='tweetDateHeader'>ERROR</div>";
+	}
+	if(isset($items['text'])){
+		echo "<div class='panel-body'>".$items['text']."</div>";
+	}else{
+		echo "<div class='panel-body'>ERROR</div>";
+	}
+	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
+	echo "</div>";
+	echo "</div>";
+	if($counter % 3 == 0){
+		echo "</div>";
+		echo "</div><br>";
+	}
+}
+if($counter % 3 != 0){
+	echo "</div>";
+	echo "</div><br>";		
+}
+
+
 ?>
 
 <footer class="container-fluid text-center">
