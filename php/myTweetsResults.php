@@ -108,14 +108,24 @@ echo $string[0]['user']['verified'];
 echo "<div class='jumbotron'>";
 echo "<div class='container'>";    
 echo "<div class='row'>";
-echo "<div class='col-sm-4' style='background-color:lavender; padding: 16px;'>";
-echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "<div class='col-sm-4' id='profilePic'>"; # Add:  style='background-color:lavender;' to color
+$subject = $string[0]['user']['profile_image_url_https'];
+$search = '_normal';
+$trimmed = str_replace($search, '', $subject);
+echo "<img src='".$trimmed."' onerror=this.src='".$subject."' height='80%' width='80%'>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavenderblush; padding: 16px;'>";
-echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
+echo "<p>Name: ".$string[0]['user']['name']."</p>";
+echo "<p>Screenname: ".$string[0]['user']['screen_name']."</p>";
+$followers = (int)$string[0]['user']['followers_count'];
+echo "<p>Followers: ".number_format($followers)."</p>";
+$following = (int)$string[0]['user']['friends_count'];
+echo "<p>Following: ".number_format($following)."</p>";
+echo "<p>Location: ".$string[0]['user']['location']."</p>";
+echo "<p>Description: ".$string[0]['user']['description']."</p>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavender; padding: 16px;'>";
-echo "<img src='".$string[0]['user']['profile_image_url_https']."'>";
+echo "<div class='col-sm-4' id='emoji'>";
+echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
 echo "</div>";
 echo "</div>";
 echo "</div>";
@@ -126,6 +136,9 @@ if($errorType == "private"){
 }else if($errorType == "nonexistant"){
 	echo "<h3>&nbsp;&nbsp;The Twitter user does not exist. Showing Tweets for: The Hackers News</h3><br>";
 }
+
+require_once __DIR__ . '/Sent/autoload.php';
+$sentiment = new \PHPInsight\Sentiment();
 	
 foreach($string as $items)
 {
@@ -151,7 +164,26 @@ foreach($string as $items)
 	}else{
 		echo "<div class='panel-body'>ERROR</div>";
 	}
-	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
+	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>";
+	
+	
+	
+	$string = "this is a test to see how accurate it is";
+
+	// calculations:
+	$scores = $sentiment->score($string);
+	$class = $sentiment->categorise($string);
+
+	// output:
+	echo "String: $string\n";
+	echo "Dominant: $class, scores: ";
+	print_r($scores);
+	echo "\n";
+
+	
+	
+	
+	echo "</p></b></div>";
 	echo "</div>";
 	echo "</div>";
 	if($counter % 3 == 0){
