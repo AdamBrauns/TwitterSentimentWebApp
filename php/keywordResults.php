@@ -81,45 +81,9 @@ foreach($string as $items)
 */	
 	
 $counter = 0;
+$error = 1;
 
-if(count($string) > 0){
-	foreach($string as $items)
-	{		
-		$counter = $counter + 1;
-		if($counter % 3 == 1){
-			echo "<div class='container'>";    
-			echo "<div class='row'>";
-		}
-		echo "<div class='col-sm-4'>";
-		echo "<div class='panel panel-primary'>";
-		if(isset($items['user']['screen_name'])){
-			echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
-		}else{
-			echo "<div class='panel-heading'>ERROR</div>";
-		}
-		if(isset($items['created_at'])){
-			echo "<div class='panel-heading' id='tweetDateHeader'>".$items['created_at']."</div>";
-		}else{
-			echo "<div class='panel-heading' id='tweetDateHeader'>ERROR</div>";
-		}
-		if(isset($items['text'])){
-			echo "<div class='panel-body'>".$items['text']."</div>";
-		}else{
-			echo "<div class='panel-body'>ERROR</div>";
-		}
-		echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
-		echo "</div>";
-		echo "</div>";
-		if($counter % 3 == 0){
-			echo "</div>";
-			echo "</div><br>";
-		}
-	}
-	if($counter % 3 != 0){
-		echo "</div>";
-		echo "</div><br>";		
-	}
-}else{
+if(count($string) == 0){
 	$url = "https://api.twitter.com/1.1/search/tweets.json";
 	$requestMethod = "GET";
 
@@ -130,46 +94,50 @@ if(count($string) > 0){
 	->performRequest(),$assoc = TRUE);	
 	
 	$string = $string['statuses'];
-	
+	$error = 5;
+}
+
+if($error == 5){
 	echo "<h3>&nbsp;&nbsp;No results found. Showing Tweets for: Technology</h3><br>";
-	
-	foreach($string as $items)
-	{
-		$counter = $counter + 1;
-		if($counter % 3 == 1){
-			echo "<div class='container'>";    
-			echo "<div class='row'>";
-		}
-		echo "<div class='col-sm-4'>";
-		echo "<div class='panel panel-primary'>";
-		if(isset($items['user']['screen_name'])){
-			echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
-		}else{
-			echo "<div class='panel-heading'>ERROR</div>";
-		}
-		if(isset($items['created_at'])){
-			echo "<div class='panel-heading' id='tweetDateHeader'>".$items['created_at']."</div>";
-		}else{
-			echo "<div class='panel-heading' id='tweetDateHeader'>ERROR</div>";
-		}
-		if(isset($items['text'])){
-			echo "<div class='panel-body'>".$items['text']."</div>";
-		}else{
-			echo "<div class='panel-body'>ERROR</div>";
-		}
-		echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
-		echo "</div>";
-		echo "</div>";
-		if($counter % 3 == 0){
-			echo "</div>";
-			echo "</div><br>";
-		}
+}
+
+foreach($string as $items)
+{
+	$counter = $counter + 1;
+	if($counter % 3 == 1){
+		echo "<div class='container'>";    
+		echo "<div class='row'>";
 	}
-	if($counter % 3 != 0){
+	echo "<div class='col-sm-4'>";
+	echo "<div class='panel panel-primary'>";
+	if(isset($items['user']['screen_name'])){
+		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
+	}else{
+		echo "<div class='panel-heading'>ERROR</div>";
+	}
+	if(isset($items['created_at'])){
+		echo "<div class='panel-heading' id='tweetDateHeader'>".$items['created_at']."</div>";
+	}else{
+		echo "<div class='panel-heading' id='tweetDateHeader'>ERROR</div>";
+	}
+	if(isset($items['text'])){
+		echo "<div class='panel-body'>".$items['text']."</div>";
+	}else{
+		echo "<div class='panel-body'>ERROR</div>";
+	}
+	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
+	echo "</div>";
+	echo "</div>";
+	if($counter % 3 == 0){
 		echo "</div>";
-		echo "</div><br>";		
+		echo "</div><br>";
 	}
 }
+if($counter % 3 != 0){
+	echo "</div>";
+	echo "</div><br>";		
+}
+
 ?>
 
 <footer class="container-fluid text-center">

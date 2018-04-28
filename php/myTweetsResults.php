@@ -164,21 +164,24 @@ foreach($string as $items)
 	}else{
 		echo "<div class='panel-body'>ERROR</div>";
 	}
-	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>";
+	echo "<div class='panel-footer'><p><b>Sentiment: <span style='float:right;'>";
 	
 	
 	
-	$string = "this is a test to see how accurate it is";
-
+	#$string = "this is a test to see how accurate it is";
+	$string = $items['text'];
+	
 	// calculations:
 	$scores = $sentiment->score($string);
 	$class = $sentiment->categorise($string);
 
 	// output:
-	echo "String: $string\n";
-	echo "Dominant: $class, scores: ";
-	print_r($scores);
-	echo "\n";
+	#echo "String: $string\n";
+	//echo "Dominant: $class, scores: ";
+	//print_r($scores);
+	//echo "<p>".$scores[$class]."</p>";
+	#echo "\n";
+	echo $class.": ".$scores[$class];
 
 	
 	
