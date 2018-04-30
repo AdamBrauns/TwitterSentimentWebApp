@@ -105,18 +105,19 @@ echo $string[0]['user']['friends_count'];
 echo $string[0]['user']['verified'];
 */
 
-echo "<div class='jumbotron'>";
+/*
+echo "<div class='jumbotron' style='background-color: #00aced;'>";
 echo "<div class='container'>";    
 echo "<div class='row'>";
 echo "<div class='col-sm-4' id='profilePic'>"; # Add:  style='background-color:lavender;' to color
 $subject = $string[0]['user']['profile_image_url_https'];
 $search = '_normal';
 $trimmed = str_replace($search, '', $subject);
-echo "<img src='".$trimmed."' onerror=this.src='".$subject."' height='80%' width='80%'>";
+echo "<img src='".$trimmed."' onerror=this.src='".$subject."' height='80%' width='80%' style='border-radius: 50%;'>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
+echo "<div class='col-sm-4' style='color: white;'>";
 echo "<p>Name: ".$string[0]['user']['name']."</p>";
-echo "<p>Screenname: ".$string[0]['user']['screen_name']."</p>";
+echo "<p>Screenname: <a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$string[0]['user']['screen_name']."</a></p>";
 $followers = (int)$string[0]['user']['followers_count'];
 echo "<p>Followers: ".number_format($followers)."</p>";
 $following = (int)$string[0]['user']['friends_count'];
@@ -130,6 +131,84 @@ echo "</div>";
 echo "</div>";
 echo "</div>";
 echo "</div>";
+*/
+
+
+echo "<div class='jumbotron' style='background-color: #00aced;'>";
+echo "<div class='container'>";
+echo "<div class='row'>";
+echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div id='profilePic'>"; # Add:  style='background-color:lavender;' to color
+$subject = $string[0]['user']['profile_image_url_https'];
+$search = '_normal';
+$trimmed = str_replace($search, '', $subject);
+echo "<img src='".$trimmed."' onerror=this.src='".$subject."' height='80%' width='80%' style='border-radius: 50%;'>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='col-sm-12' style='background-color:lightcyan;'><p>Name: ".$string[0]['user']['name']."</p></div>";
+echo "</div>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
+echo "<div style='color: white;'>";
+echo "<p>Screenname: <a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$string[0]['user']['screen_name']."</a></p>";
+$followers = (int)$string[0]['user']['followers_count'];
+echo "<p>Followers: ".number_format($followers)."</p>";
+$following = (int)$string[0]['user']['friends_count'];
+echo "<p>Following: ".number_format($following)."</p>";
+echo "<p>Location: ".$string[0]['user']['location']."</p>";
+echo "<p>Description: ".$string[0]['user']['description']."</p>";
+echo "</div>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div id='emoji'>";
+echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='col-sm-12' style='background-color:lightcyan;'>";
+echo "<p>Average Sentiment: .35";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+
+/* STRUCTURE OF CONTAINER
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hello World!</h1>
+  <p>Resize the browser window to see the effect.</p>
+  <div class="row">
+    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4
+      <div class="row">
+        <div class="col-sm-12" style="background-color:lightcyan;">.col-sm-4</div>
+      </div>
+    </div>
+    <div class="col-sm-4" style="background-color:lavenderblush;">.col-sm-4</div>
+    <div class="col-sm-4" style="background-color:lavender;">.col-sm-4
+      <div class="row">
+        <div class="col-sm-12" style="background-color:lightcyan;">.col-sm-4</div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+</body>
+</html>
+
+*/
 
 if($errorType == "private"){
 	echo "<h3>&nbsp;&nbsp;The Twitter user is private. Showing Tweets for: The Hackers News</h3><br>";

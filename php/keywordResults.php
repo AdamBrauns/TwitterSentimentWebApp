@@ -101,6 +101,9 @@ if($error == 5){
 	echo "<h3>&nbsp;&nbsp;No results found. Showing Tweets for: Technology</h3><br>";
 }
 
+require_once __DIR__ . '/Sent/autoload.php';
+$sentiment = new \PHPInsight\Sentiment();
+
 foreach($string as $items)
 {
 	$counter = $counter + 1;
@@ -125,7 +128,32 @@ foreach($string as $items)
 	}else{
 		echo "<div class='panel-body'>ERROR</div>";
 	}
-	echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
+	//echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
+		echo "<div class='panel-footer'><p><b>Sentiment: <span style='float:right;'>";
+	
+	
+	
+	#$string = "this is a test to see how accurate it is";
+	$string = $items['text'];
+	
+	// calculations:
+	$scores = $sentiment->score($string);
+	$class = $sentiment->categorise($string);
+
+	// output:
+	#echo "String: $string\n";
+	//echo "Dominant: $class, scores: ";
+	//print_r($scores);
+	//echo "<p>".$scores[$class]."</p>";
+	#echo "\n";
+	echo $class.": ".$scores[$class];
+
+	
+	
+	
+	echo "</p></b></div>";
+	
+	
 	echo "</div>";
 	echo "</div>";
 	if($counter % 3 == 0){
