@@ -30,14 +30,18 @@ footer {
 }	
 
 #profilePic {
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  border-radius: 50%;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+	border-radius: 50%;
 }
 
 #emoji {
-  display:flex;
-  align-items:center;
-  justify-content:center;
+	display:flex;
+	align-items:center;
+	justify-content:center;
+}
+
+.navbar{
+	background-color: #222;
 }

@@ -12,32 +12,83 @@
 <body>
 
 <nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="../index.php"><img src="../images/TwitterLogo.png"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="../index.php">Home</a></li>
-        <li class="active" name="top"><a href="keywordSearch.php">Keyword</a></li>
-        <li><a href="myTweetsSearch.php">My Tweets</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
-
+      <div class="container-fluid">
+        <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="../index.php" name="top"><img src="../images/TwitterLogo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a href="../index.php">Home</a></li>
+				<li class="dropdown active">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Keyword<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<p>&nbsp;Create a New Search</p>
+						</li>
+						<!--<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>-->
+						<li><form action="keywordSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
+						<br>
+						<li>
+							<p>&nbsp;Quickly Search Here:</p>
+						</li>
+						  <form method="POST" action="keywordResults.php">
+                              <div class="form-group">
+								<li>
+                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="keyword" placeholder="Technology">
+                                </li>
+								<span class="help-block"></span>
+                              </div>
+							  <li>
+								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Keyword</button>
+							  </li>
+						  </form>
+					</ul>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Tweets<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<p>&nbsp;Create a New Search</p>
+						</li>
+						<li><form action="myTweetsSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
+						<br>
+						<li>
+							<p>&nbsp;Quickly Search Here:</p>
+						</li>
+						  <form method="POST" action="myTweetsResults.php">
+                              <div class="form-group">
+								<li>
+                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="account" placeholder="UWWhitewater">
+                                </li>
+								<span class="help-block"></span>
+                              </div>
+							  <li>
+								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find My Tweets</button>
+							  </li>
+						  </form>
+					</ul>
+				</li>
+			</ul>
+        </div>
+      </div>
+    </nav>
+<!--
 <div class="jumbotron">
   <div class="container text-center">
 	<h1>Keyword Info</h1>
     <h1>Twitter Account Info</h1>      
   </div>
 </div>
-
+-->
 <?php        
 
 if(isset($_POST["keyword"])){
@@ -86,8 +137,8 @@ $error = 1;
 if(count($string) == 0){
 	$url = "https://api.twitter.com/1.1/search/tweets.json";
 	$requestMethod = "GET";
-
-	$getfield = "?q=Technology&result_type=recent&count=$count";
+	$keyword = "Technology";
+	$getfield = "?q=$keyword&result_type=recent&count=$count";
 	$twitter = new TwitterAPIExchange($settings);
 	$string = json_decode($twitter->setGetfield($getfield)
 	->buildOauth($url, $requestMethod)
@@ -96,6 +147,67 @@ if(count($string) == 0){
 	$string = $string['statuses'];
 	$error = 5;
 }
+
+/*
+echo "<div class='jumbotron' style='background-color: #00aced;'>";
+echo "<div class='container'>";    
+echo "<div class='row'>";
+echo "<div class='col-sm-4' id='profilePic'>"; # Add:  style='background-color:lavender;' to color
+
+include('simple_html_dom.php');
+$search_keyword=str_replace(' ','+',$keyword);
+$newhtml =file_get_html("https://www.google.com/search?q=".$search_keyword."&tbm=isch&gws_rd=cr&ei=16E0WMGSKYmisAHmp6b4Ag");
+$result_image_source = $newhtml->find('img', 0)->src;
+echo "<img src='".$result_image_source."' height='100%' width='100%' style='border-radius: 50%;'>";
+
+echo "</div>";
+echo "<div class='col-sm-4' style='color: white;'>";
+echo "<p>Keyword: ".$keyword."</p>";
+echo "<p>Google link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank'>Click Me!</a></p>";
+echo "</div>";
+echo "<div class='col-sm-4' id='emoji'>";
+echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+*/
+
+echo "<div class='jumbotron' style='background-color: #00aced;'>";
+echo "<div class='container'>";
+echo "<div class='row'>";
+echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div id='profilePic'>"; # Add:  style='background-color:lavender;' to color
+include('simple_html_dom.php');
+$search_keyword=str_replace(' ','+',$keyword);
+$newhtml =file_get_html("https://www.google.com/search?q=".$search_keyword."&tbm=isch&gws_rd=cr&ei=16E0WMGSKYmisAHmp6b4Ag");
+$result_image_source = $newhtml->find('img', 0)->src;
+echo "<img src='".$result_image_source."' height='100%' width='100%' style='border-radius: 50%;'>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='col-sm-12' style='background-color:lightcyan;'><p>Keyword: ".$keyword."</p></div>";
+echo "</div>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
+echo "<div style='color: white;'>";
+echo "<p>Keyword: ".$keyword."</p>";
+echo "<p>Google Link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank'>Click Me!</a></p>";
+echo "</div>";
+echo "</div>";
+echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div id='emoji'>";
+echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
+echo "</div>";
+echo "<div class='row'>";
+echo "<div class='col-sm-12' style='background-color:lightcyan;'>";
+echo "<p>Average Sentiment: .35";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+echo "</div>";
+
 
 if($error == 5){
 	echo "<h3>&nbsp;&nbsp;No results found. Showing Tweets for: Technology</h3><br>";

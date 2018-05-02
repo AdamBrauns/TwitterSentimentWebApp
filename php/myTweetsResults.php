@@ -11,25 +11,76 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
-  <div class="container-fluid">
-    <div class="navbar-header">
-	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="../index.php"><img src="../images/TwitterLogo.png"></a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li><a href="../index.php">Home</a></li>
-        <li><a href="keywordSearch.php">Keyword</a></li>
-        <li class="active" name="top"><a href="myTweetsSearch.php">My Tweets</a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+	<nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="../index.php" name="top"><img src="../images/TwitterLogo.png"></a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+			<ul class="nav navbar-nav">
+				<li><a href="../index.php">Home</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Keyword<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<p>&nbsp;Create a New Search</p>
+						</li>
+						<!--<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>-->
+						<li><form action="keywordSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
+						<br>
+						<li>
+							<p>&nbsp;Quickly Search Here:</p>
+						</li>
+						  <form method="POST" action="keywordResults.php">
+                              <div class="form-group">
+								<li>
+                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="keyword" placeholder="Technology">
+                                </li>
+								<span class="help-block"></span>
+                              </div>
+							  <li>
+								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Keyword</button>
+							  </li>
+						  </form>
+					</ul>
+				</li>
+				<li class="dropdown active">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Tweets<b class="caret"></b></a>
+					<ul class="dropdown-menu">
+						<li>
+							<p>&nbsp;Create a New Search</p>
+						</li>
+						<li><form action="myTweetsSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
+						<br>
+						<li>
+							<p>&nbsp;Quickly Search Here:</p>
+						</li>
+						  <form method="POST" action="myTweetsResults.php">
+                              <div class="form-group">
+								<li>
+                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="account" placeholder="UWWhitewater">
+                                </li>
+								<span class="help-block"></span>
+                              </div>
+							  <li>
+								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find My Tweets</button>
+							  </li>
+						  </form>
+					</ul>
+				</li>
+			</ul>
+        </div>
+      </div>
+    </nav>
 <!--
 <div class="jumbotron">
   <div class="container text-center">

@@ -50,7 +50,10 @@
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
-						<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>
+						<!--<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>-->
+						<li><form action="php/keywordSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
 						<br>
 						<li>
 							<p>&nbsp;Quickly Search Here:</p>
@@ -66,7 +69,6 @@
 								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Keyword</button>
 							  </li>
 						  </form>
-						
 					</ul>
 				</li>
 				<li class="dropdown">
@@ -75,7 +77,9 @@
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
-						<li><a href="php/myTweetsSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>
+						<li><form action="php/myTweetsSearch.php">
+							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
+						</form></li>
 						<br>
 						<li>
 							<p>&nbsp;Quickly Search Here:</p>
@@ -91,7 +95,6 @@
 								<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find My Tweets</button>
 							  </li>
 						  </form>
-						
 					</ul>
 				</li>
 			</ul>
@@ -128,7 +131,7 @@
                                   <input type="text" class="form-control" value="" required="" title="Please enter your Twitter handle!" name="account" placeholder="UWWhitewater">
                                   <span class="help-block"></span>
                               </div>
-                              <button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Twitter Account</button>
+                              <button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Account</button>
                           </form>
                       </div>
                   </div>
