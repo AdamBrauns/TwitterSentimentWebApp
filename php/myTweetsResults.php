@@ -186,9 +186,9 @@ echo "</div>";
 
 
 echo "<div class='jumbotron' style='background-color: #00aced;'>";
-echo "<div class='container'>";
+echo "<div class='container' style='color: white;'>";
 echo "<div class='row'>";
-echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div class='col-sm-4'>";
 echo "<div id='profilePic'>"; # Add:  style='background-color:lavender;' to color
 $subject = $string[0]['user']['profile_image_url_https'];
 $search = '_normal';
@@ -196,12 +196,12 @@ $trimmed = str_replace($search, '', $subject);
 echo "<img src='".$trimmed."' onerror=this.src='".$subject."' height='80%' width='80%' style='border-radius: 50%;'>";
 echo "</div>";
 echo "<div class='row'>";
-echo "<div class='col-sm-12' style='background-color:lightcyan;'><p>Name: ".$string[0]['user']['name']."</p></div>";
+echo "<div class='col-sm-12'><p>Name: ".$string[0]['user']['name']."</p></div>";
 echo "</div>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
-echo "<div style='color: white;'>";
-echo "<p>Screenname: <a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$string[0]['user']['screen_name']."</a></p>";
+echo "<div class='col-sm-4'>";
+echo "<div>";
+echo "<p>Screenname: <a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white;'>@".$string[0]['user']['screen_name']."</a></p>";
 $followers = (int)$string[0]['user']['followers_count'];
 echo "<p>Followers: ".number_format($followers)."</p>";
 $following = (int)$string[0]['user']['friends_count'];
@@ -210,12 +210,12 @@ echo "<p>Location: ".$string[0]['user']['location']."</p>";
 echo "<p>Description: ".$string[0]['user']['description']."</p>";
 echo "</div>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div class='col-sm-4'>";
 echo "<div id='emoji'>";
 echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
 echo "</div>";
 echo "<div class='row'>";
-echo "<div class='col-sm-12' style='background-color:lightcyan;'>";
+echo "<div class='col-sm-12'>";
 echo "<p>Average Sentiment: .35";
 echo "</div>";
 echo "</div>";
@@ -280,7 +280,7 @@ foreach($string as $items)
 	echo "<div class='col-sm-4'>";
 	echo "<div class='panel panel-primary'>";
 	if(isset($items['user']['screen_name'])){
-		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
+		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white;'>@".$items['user']['screen_name']."</a></div>";
 	}else{
 		echo "<div class='panel-heading'>ERROR</div>";
 	}

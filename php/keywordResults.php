@@ -174,9 +174,9 @@ echo "</div>";
 */
 
 echo "<div class='jumbotron' style='background-color: #00aced;'>";
-echo "<div class='container'>";
+echo "<div class='container' style='color: white;'>";
 echo "<div class='row'>";
-echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div class='col-sm-4'>";
 echo "<div id='profilePic'>"; # Add:  style='background-color:lavender;' to color
 include('simple_html_dom.php');
 $search_keyword=str_replace(' ','+',$keyword);
@@ -185,22 +185,22 @@ $result_image_source = $newhtml->find('img', 0)->src;
 echo "<img src='".$result_image_source."' height='100%' width='100%' style='border-radius: 50%;'>";
 echo "</div>";
 echo "<div class='row'>";
-echo "<div class='col-sm-12' style='background-color:lightcyan;'><p>Keyword: ".$keyword."</p></div>";
+echo "<div class='col-sm-12'><p style='text-align: center;'>Keyword: ".$keyword."</p></div>";
 echo "</div>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavenderblush;'>";
-echo "<div style='color: white;'>";
+echo "<div class='col-sm-4'>";
+echo "<div>";
 echo "<p>Keyword: ".$keyword."</p>";
-echo "<p>Google Link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank'>Click Me!</a></p>";
+echo "<p>Google Link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank' style='color: white;'>Click Me!</a></p>";
 echo "</div>";
 echo "</div>";
-echo "<div class='col-sm-4' style='background-color:lavender;'>";
+echo "<div class='col-sm-4'>";
 echo "<div id='emoji'>";
 echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
 echo "</div>";
 echo "<div class='row'>";
-echo "<div class='col-sm-12' style='background-color:lightcyan;'>";
-echo "<p>Average Sentiment: .35";
+echo "<div class='col-sm-12'>";
+echo "<p style='text-align: center;'>Average Sentiment: .35";
 echo "</div>";
 echo "</div>";
 echo "</div>";
@@ -226,7 +226,7 @@ foreach($string as $items)
 	echo "<div class='col-sm-4'>";
 	echo "<div class='panel panel-primary'>";
 	if(isset($items['user']['screen_name'])){
-		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white; text-decoration: none;'>@".$items['user']['screen_name']."</a></div>";
+		echo "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white;'>@".$items['user']['screen_name']."</a></div>"; #text-decoration: none;
 	}else{
 		echo "<div class='panel-heading'>ERROR</div>";
 	}
