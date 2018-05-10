@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-inverse">
+	<nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
 	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -19,14 +19,14 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>                        
           </button>
-          <a class="navbar-brand" href="../index.php" name="top"><img src="../images/TwitterLogo.png"></a>
+          <a class="navbar-brand" href="../index.php"><img src="../images/TwitterLogo.png"></a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li><a href="../index.php">Home</a></li>
 				<li class="dropdown active">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Keyword<b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" name="top">Keyword<b class="caret"></b></a>
+					<ul class="dropdown-menu" style='background-color: black; color: white;'>
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
@@ -41,7 +41,7 @@
 						  <form method="POST" action="keywordResults.php">
                               <div class="form-group">
 								<li>
-                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="keyword" placeholder="Technology">
+                                  <input style='background-color: #FFFACD;' type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="keyword" placeholder="Technology">
                                 </li>
 								<span class="help-block"></span>
                               </div>
@@ -53,7 +53,7 @@
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">My Tweets<b class="caret"></b></a>
-					<ul class="dropdown-menu">
+					<ul class="dropdown-menu" style='background-color: black; color: white;'>
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
@@ -67,7 +67,7 @@
 						  <form method="POST" action="myTweetsResults.php">
                               <div class="form-group">
 								<li>
-                                  <input type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="account" placeholder="UWWhitewater">
+                                  <input style='background-color: #FFFACD;' type="text" class="form-control" value="" required="" title="Please enter a keyword!" name="account" placeholder="UWWhitewater">
                                 </li>
 								<span class="help-block"></span>
                               </div>
@@ -148,30 +148,91 @@ if(count($string) == 0){
 	$error = 5;
 }
 
-/*
-echo "<div class='jumbotron' style='background-color: #00aced;'>";
-echo "<div class='container'>";    
-echo "<div class='row'>";
-echo "<div class='col-sm-4' id='profilePic'>"; # Add:  style='background-color:lavender;' to color
 
-include('simple_html_dom.php');
-$search_keyword=str_replace(' ','+',$keyword);
-$newhtml =file_get_html("https://www.google.com/search?q=".$search_keyword."&tbm=isch&gws_rd=cr&ei=16E0WMGSKYmisAHmp6b4Ag");
-$result_image_source = $newhtml->find('img', 0)->src;
-echo "<img src='".$result_image_source."' height='100%' width='100%' style='border-radius: 50%;'>";
 
-echo "</div>";
-echo "<div class='col-sm-4' style='color: white;'>";
-echo "<p>Keyword: ".$keyword."</p>";
-echo "<p>Google link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank'>Click Me!</a></p>";
-echo "</div>";
-echo "<div class='col-sm-4' id='emoji'>";
-echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-echo "</div>";
-*/
+
+
+$negCounter = 0;
+$neuCounter = 0;
+$posCounter = 0;
+$divider = count($string);
+$totalSentiment = 0;
+$userInfo = $string[0];
+$tweetDiv = "";
+
+if($error == 5){
+	$tweetDiv .= "<h3>&nbsp;&nbsp;No results found. Showing Tweets for: Technology</h3><br>";
+}
+
+require_once __DIR__ . '/Sent/autoload.php';
+$sentiment = new \PHPInsight\Sentiment();
+
+foreach($string as $items)
+{
+	$counter = $counter + 1;
+	if($counter % 3 == 1){
+		$tweetDiv .= "<div class='container'>";    
+		$tweetDiv .= "<div class='row'>";
+	}
+	$tweetDiv .= "<div class='col-sm-4'>";
+	$tweetDiv .= "<div class='panel panel-primary'>";
+	if(isset($items['user']['screen_name'])){
+		$tweetDiv .= "<div class='panel-heading'><a href='https://twitter.com/".$items['user']['screen_name']."' target='_blank' style='color: white;'>@".$items['user']['screen_name']."</a></div>"; #text-decoration: none;
+	}else{
+		$tweetDiv .= "<div class='panel-heading'>ERROR</div>";
+	}
+	if(isset($items['created_at'])){
+		$tweetDiv .= "<div class='panel-heading' id='tweetDateHeader'>".$items['created_at']."</div>";
+	}else{
+		$tweetDiv .= "<div class='panel-heading' id='tweetDateHeader'>ERROR</div>";
+	}
+	if(isset($items['text'])){
+		$tweetDiv .= "<div class='panel-body'>".$items['text']."</div>";
+	}else{
+		$tweetDiv .= "<div class='panel-body'>ERROR</div>";
+	}
+	$tweetDiv .= "<div class='panel-footer'><p><b>Sentiment: <span style='float:right;'>";
+	
+	$string = $items['text'];
+
+	$scores = $sentiment->score($string);
+	$class = $sentiment->categorise($string);
+
+	$tweetDiv .= $class.": ".$scores[$class];
+	
+	if($class == 'neg'){
+		$negCounter += 1;
+		$temp = -1 * $scores[$class];
+		#$tweetDiv .= $temp;
+		$totalSentiment += $temp;
+	}else if($class == 'pos'){
+		$posCounter += 1;
+		$temp = $scores[$class];
+		#$tweetDiv .= $temp;
+		$totalSentiment += $temp;
+	}else if($class == 'neu'){
+		$neuCounter += 1;
+	}
+	
+	$tweetDiv .= "</p></b></div>";
+	$tweetDiv .= "</div>";
+	$tweetDiv .= "</div>";
+	if($counter % 3 == 0){
+		$tweetDiv .= "</div>";
+		$tweetDiv .= "</div><br>";
+	}
+}
+if($counter % 3 != 0){
+	$tweetDiv .= "</div>";
+	$tweetDiv .= "</div><br>";		
+}
+
+
+
+
+
+
+
 
 echo "<div class='jumbotron' style='background-color: #00aced;'>";
 echo "<div class='container' style='color: white;'>";
@@ -192,15 +253,65 @@ echo "<div class='col-sm-4'>";
 echo "<div>";
 echo "<p>Keyword: ".$keyword."</p>";
 echo "<p>Google Link: <a href='https://www.google.com/search?q=".$keyword."' target='_blank' style='color: white;'>Click Me!</a></p>";
+echo "<p>Positive Tweets: ".$posCounter."</p>";
+echo "<p>Neutral Tweets: ".$neuCounter."</p>";
+echo "<p>Negative Tweets: ".$negCounter."</p>";
 echo "</div>";
 echo "</div>";
 echo "<div class='col-sm-4'>";
 echo "<div id='emoji'>";
-echo "<img src='../images/emoji/positive.png' height='80%' width='80%'>";
+
+$imgSrc = "";
+if(max($posCounter, $neuCounter, $negCounter) == $posCounter){
+	//echo "<p>pos has the most</p>";
+	if($negCounter/$divider <= .2){
+		//Super happy
+		$imgSrc = "../images/emoji/positive.png";
+	}else{
+		//Mild happy
+		$imgSrc = "../images/emoji/positive2.png";
+	}
+}else if(max($posCounter, $neuCounter, $negCounter) == $negCounter){
+	//echo "<p>neg has the most</p>";
+	if($posCounter/$divider <= .2){
+		//Super sad
+		$imgSrc = "../images/emoji/negative.png";
+	}else{
+		//Mild sad
+		$imgSrc = "../images/emoji/negative2.png";
+	}
+}else{
+	//echo "<p>neu has the most</p>";
+	if($posCounter > $negCounter){
+		$ratio = $posCounter/($divider-$neuCounter);
+		//echo "<p>".$ratio."</p>";
+		if($ratio > .65){
+			//Mild happy
+			$imgSrc = "../images/emoji/positive2.png";
+		}else{
+			//Neutral
+			$imgSrc = "../images/emoji/neutral.png";
+		}
+	}else{
+		$ratio = $negCounter/($divider-$neuCounter);
+		//echo "<p>".$ratio."</p>";
+		if($ratio > .65){
+			//Mild sad
+			$imgSrc = "../images/emoji/negative2.png";
+		}else{
+			//Neutral
+			$imgSrc = "../images/emoji/neutral.png";
+		}
+	}
+}
+
+
+echo "<img src='".$imgSrc."' height='80%' width='80%'>";
+
 echo "</div>";
 echo "<div class='row'>";
 echo "<div class='col-sm-12'>";
-echo "<p style='text-align: center;'>Average Sentiment: .35";
+echo "<p style='text-align: center;'>".round($totalSentiment/$divider, 3)."</p>";
 echo "</div>";
 echo "</div>";
 echo "</div>";
@@ -208,7 +319,9 @@ echo "</div>";
 echo "</div>";
 echo "</div>";
 
+echo $tweetDiv;
 
+/*
 if($error == 5){
 	echo "<h3>&nbsp;&nbsp;No results found. Showing Tweets for: Technology</h3><br>";
 }
@@ -240,32 +353,15 @@ foreach($string as $items)
 	}else{
 		echo "<div class='panel-body'>ERROR</div>";
 	}
-	//echo "<div class='panel-footer'><p><b>Sentiment Score: <span style='float:right;'>0.2</p></b></div>";
-		echo "<div class='panel-footer'><p><b>Sentiment: <span style='float:right;'>";
+	echo "<div class='panel-footer'><p><b>Sentiment: <span style='float:right;'>";
 	
-	
-	
-	#$string = "this is a test to see how accurate it is";
 	$string = $items['text'];
-	
-	// calculations:
+
 	$scores = $sentiment->score($string);
 	$class = $sentiment->categorise($string);
 
-	// output:
-	#echo "String: $string\n";
-	//echo "Dominant: $class, scores: ";
-	//print_r($scores);
-	//echo "<p>".$scores[$class]."</p>";
-	#echo "\n";
 	echo $class.": ".$scores[$class];
-
-	
-	
-	
 	echo "</p></b></div>";
-	
-	
 	echo "</div>";
 	echo "</div>";
 	if($counter % 3 == 0){
@@ -277,6 +373,7 @@ if($counter % 3 != 0){
 	echo "</div>";
 	echo "</div><br>";		
 }
+*/
 
 ?>
 
