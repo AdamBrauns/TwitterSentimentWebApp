@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Twitter User Results</title>
+  <title>User Search</title>
+  <link rel="icon" href="../images/TwitterLogo.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,27 +11,6 @@
   <link rel="stylesheet" href="../css/template.css">
 </head>
 <body style='background-color: #00aced;'>
-<!--
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="../index.php"><img src="../images/TwitterLogo.png"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-			<li><a href="../index.php">Home</a></li>
-            <li><a href="keywordSearch.php">Keyword</a></li>
-            <li class="active"><a href="myTweetsSearch.php">My Tweets</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-	-->
 	<nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -50,7 +30,6 @@
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
-						<!--<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>-->
 						<li><form action="keywordSearch.php">
 							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
 						</form></li>
@@ -108,21 +87,17 @@
 			  <p>To begin, select the operation that you would like to view.</p>
           </div>
           <div class="modal-body">
-              
-                  
-                      <div class="well">
-                          <form method="POST" action="myTweetsResults.php">
-                              <div class="form-group">
-                                  <label class="control-label">View My Tweets</label>
-								  <p>In this section, you can enter in your Twitter handle to view your tweets and the associating Sentiment Score!</p>
-                                  <input type="text" class="form-control" value="" required="" title="Please enter your Twitter handle!" name="account" placeholder="UWWhitewater">
-                                  <span class="help-block"></span>
-                              </div>
-                              <button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Twitter Account</button>
-                          </form>
-                      </div>
-                  
-              
+                <div class="well">
+                    <form method="POST" action="myTweetsResults.php">
+                        <div class="form-group">
+                            <label class="control-label">View My Tweets</label>
+							<p>In this section, you can enter in your Twitter handle to view your tweets and the associating Sentiment Score!</p>
+                            <input type="text" class="form-control" value="" required="" title="Please enter your Twitter handle!" name="account" placeholder="UWWhitewater">
+                            <span class="help-block"></span>
+                        </div>
+                        <button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">Find Twitter Account</button>
+                        </form>
+                </div>
           </div>
       </div>
   </div>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Twitter User Results</title>
+  <title>Homepage</title>
+  <link rel="icon" href="../images/TwitterLogo.png">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -10,26 +11,6 @@
   <link rel="stylesheet" href="../css/template.css">
 </head>
 <body style='background-color: #00aced;'>
-<!--
-    <nav class="navbar navbar-inverse">
-      <div class="container-fluid">
-        <div class="navbar-header">
-	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>                        
-          </button>
-          <a class="navbar-brand" href="#" name="top"><img src="../images/TwitterLogo.png"></a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="../index.php">Home</a></li>
-            <li><a href="php/keywordSearch.php">Keyword</a></li>
-            <li><a href="php/myTweetsSearch.php">My Tweets</a></li>
-          </ul>
-        </div>
-      </div>
-    </nav> -->
 	<nav class="navbar navbar-inverse">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -49,7 +30,6 @@
 						<li>
 							<p>&nbsp;Create a New Search</p>
 						</li>
-						<!--<li><a href="php/keywordSearch.php"><button class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button></a></li>-->
 						<li><form action="php/keywordSearch.php">
 							<button type="submit" class="btn btn-success btn-block" style="background-color: #00aced;">New Search</button>
 						</form></li>
